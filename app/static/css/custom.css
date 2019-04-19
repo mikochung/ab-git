@@ -1,0 +1,13 @@
+li.tight {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.navbar-inverse {
+    background-color: limegreen;
+    border-color: limegreen;
+}
+
+.navbar-brand a{
+    color: #FFFFFF;
+}
