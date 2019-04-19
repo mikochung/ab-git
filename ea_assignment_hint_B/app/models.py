@@ -93,16 +93,16 @@ class MenuCategory(Model):
     name = Column(String(50), nullable=False)
 
 
-class News(Model):
-    __tablename__ = 'news'
+class Good(Model):
+    __tablename__ = 'good'
     id = Column(Integer, primary_key=True)
     title = Column(String(50), nullable=False)
     content = Column(String(500), nullable=False)
     date = Column(Date, default=datetime.date.today(), nullable=True)
-    newsCat_id = Column(Integer, ForeignKey('news_category.id'), nullable=False)
-    newsCat = relationship("NewsCategory")
+    goodCat_id = Column(Integer, ForeignKey('good_category.id'), nullable=False)
+    goodCat = relationship("GoodCategory")
 
-class NewsCategory(Model):
-    __tablename__ = 'news_category'
+class GoodCategory(Model):
+    __tablename__ = 'good_category'
     id = Column(Integer, primary_key=True)
     name = Column(String(50), nullable=False)
