@@ -1,7 +1,7 @@
 from flask_appbuilder import ModelView
 from flask_appbuilder.fieldwidgets import Select2Widget
 from flask_appbuilder.models.sqla.interface import SQLAInterface
-from .models import Employee,Department, Function, EmployeeHistory, Benefit, MenuItem, MenuCategory, News, NewsCategory
+from .models import Employee,Department, Function, EmployeeHistory, Benefit, MenuItem, MenuCategory, Good, GoodCategory
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from app import appbuilder, db
 from flask_appbuilder.baseviews import expose, BaseView
@@ -55,39 +55,77 @@ class MenuCategoryView(ModelView):
     datamodel = SQLAInterface(MenuCategory)
     list_columns = ['id', 'name']
 
-class NewsView(ModelView):
-    datamodel = SQLAInterface(News)
-    list_columns = ['id', 'title', 'content', 'date', 'newsCat_id']
+class GoodView(ModelView):
+    datamodel = SQLAInterface(Good)
+    list_columns = ['id', 'title', 'content', 'date', 'goodCat_id']
 
-class NewsCategoryView(ModelView):
-    datamodel = SQLAInterface(NewsCategory)
+class GoodCategoryView(ModelView):
+    datamodel = SQLAInterface(GoodCategory)
     list_columns = ['id', 'name']
 
-class NewsPageView(BaseView):
-    default_view = 'local_news'
 
-    @expose('/local_news/')
-    def local_news(self):
-        param1 = 'Local News'
+class LocalPageView(BaseView):
+    default_view = 'all_deals'
+
+    @expose('/all_deals')
+    def all_deals(self):
+        param1 = 'All Deals'
         self.update_redirect()
-        return self.render_template('news.html', param1 = param1)
+        return self.render_template('local.html', param1 = param1)
 
-    @expose('/global_news/')
-    def global_news(self):
-        param1 = 'Global News'
+
+class GoodPageView(BaseView):
+    default_view = 'auto_and_home_improvement'
+
+    @expose('/auto_and_home_improvement')
+    def auto_and_home_improvement(self):
+        param1 = 'Auto & Home Improvement'
         self.update_redirect()
-        return self.render_template('news.html', param1=param1)
+        return self.render_template('good.html', param1 = param1)
 
+    @expose('/baby_and_kids/')
+    def baby_and_kids(self):
+        param1 = 'Baby & Kids'
+        self.update_redirect()
+        return self.render_template('good.html', param1=param1)
+
+
+    @expose('/electronics/')
+    def electronics(self):
+        param1 = 'Electronics'
+        self.update_redirect()
+        return self.render_template('good.html', param1=param1)
+
+    @expose('/entertainment/')
+    def electronics(self):
+        param1 = 'Entertainment'
+        self.update_redirect()
+        return self.render_template('good.html', param1=param1)
+
+    @expose('/for_the_home/')
+    def electronics(self):
+        param1 = 'For Thr Home'
+        self.update_redirect()
+        return self.render_template('good.html', param1=param1)
+
+    @expose('/grocery_and_household/')
+    def electronics(self):
+        param1 = 'Grocery & household'
+        self.update_redirect()
+        return self.render_template('good.html', param1=param1)
 
 db.create_all()
-
+appbuilder.add_view(LocalPageView, 'All Deals', category="Local")
 """ Page View """
-appbuilder.add_view(NewsPageView, 'Local News', category="News")
-appbuilder.add_link("Global News", href="/newspageview/global_news/", category="News")
+appbuilder.add_view(GoodPageView, 'Auto & Home Improvement', category="Good")
+appbuilder.add_link("Baby & Kids", href="/GoodPageView/baby_and_kids/", category="Good")
+appbuilder.add_link("Electronics", href="/GoodPageView/electronics/", category="Good")
+appbuilder.add_link("Entertainment", href="/GoodPageView/entertainment/", category="Good")
+appbuilder.add_link("For Thr Home", href="/GoodPageView/for_the_home/", category="Good")
+appbuilder.add_link("Grocery & household", href="/GoodPageView/grocery_and_household/", category="Good")
 
 """ Custom Views """
 appbuilder.add_view(MenuItemView, "MenuItem", icon="fa-folder-open-o", category="Admin")
 appbuilder.add_view(MenuCategoryView, "MenuCategory", icon="fa-folder-open-o", category="Admin")
-appbuilder.add_view(NewsView, "News", icon="fa-folder-open-o", category="Admin")
-appbuilder.add_view(NewsCategoryView, "NewsCategory", icon="fa-folder-open-o", category="Admin")
-
+appbuilder.add_view(GoodView, "Good", icon="fa-folder-open-o", category="Admin")
+appbuilder.add_view(GoodCategoryView, "GoodCategory", icon="fa-folder-open-o", category="Admin")
